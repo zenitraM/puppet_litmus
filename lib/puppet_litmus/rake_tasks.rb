@@ -194,14 +194,14 @@ namespace :litmus do
     include BoltSpec::Run
     puts "\nSending"
     module_tars.each do |module_tar|
-      upload_file(module_tar.path, "/tmp/#{File.basename(module_tar)}", target_nodes, options: {}, config: nil, inventory: inventory_hash)
+      upload_file(module_tar.path, "/tmp/#{File.basename(module_tar)}", target_nodes, options: {}, config: nil, inventory: inventory_hash.clone)
       print "#{File.basename(module_tar)} "
     end
     puts "\nInstalling"
     module_tars.each do |module_tar|
       # install_module
       install_module_command = "puppet module install --force /tmp/#{File.basename(module_tar)}"
-      run_command(install_module_command, target_nodes, config: nil, inventory: inventory_hash)
+      run_command(install_module_command, target_nodes, config: nil, inventory: inventory_hash.clone)
       print "#{File.basename(module_tar)} "
     end
   end
